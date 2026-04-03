@@ -10,7 +10,12 @@
     "strict": true,
     "esModuleInterop": true,
     "moduleResolution": "node",
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "paths": {
+      "react-dashboard-grid": [
+        "./node_modules/react-dashboard-grid/dist/types/index.d.ts"
+      ]
+    }
   },
   "include": ["src"],
   "exclude": [

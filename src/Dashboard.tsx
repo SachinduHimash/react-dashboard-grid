@@ -1,4 +1,10 @@
-import React, { useState, useMemo, useCallback } from "react";
+import React, {
+  useState,
+  useMemo,
+  useCallback,
+  useEffect,
+  useRef,
+} from "react";
 import GridLayout, { Layout } from "react-grid-layout";
 import "react-grid-layout/css/styles.css";
 import "react-resizable/css/styles.css";
@@ -102,7 +108,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
       setLayout(newLayout);
 
       // Notify parent if they want to know
-      onAddWidget?.();
+      onAddWidget?.(widget);
     },
     [items, layout, onAddWidget],
   );
@@ -204,6 +210,25 @@ export const Dashboard: React.FC<DashboardProps> = ({
     };
   });
 
+  const gridContainerRef = useRef<HTMLDivElement>(null);
+  const [gridWidth, setGridWidth] = useState(1200);
+
+  useEffect(() => {
+    const el = gridContainerRef.current;
+    if (!el) return;
+
+    const ro = new ResizeObserver((entries) => {
+      const width = entries[0]?.contentRect.width;
+      if (width) setGridWidth(width);
+    });
+    ro.observe(el);
+
+    // Set immediately on mount too
+    setGridWidth(el.getBoundingClientRect().width);
+
+    return () => ro.disconnect();
+  }, []);
+
   return (
     <div
       style={
@@ -233,12 +258,15 @@ export const Dashboard: React.FC<DashboardProps> = ({
         addLabel={addLabel}
       />
 
-      <div style={{ ...gridOverlayStyle, transition: "background 0.3s" }}>
+      <div
+        ref={gridContainerRef}
+        style={{ ...gridOverlayStyle, transition: "background 0.3s" }}
+      >
         <GridLayout
           layout={layoutWithResizable}
           cols={COLS}
           rowHeight={ROW_HEIGHT}
-          width={1200}
+          width={gridWidth}
           onResize={handleResize}
           onDragStop={handleDragStop}
           onResizeStop={handleResizeStop}

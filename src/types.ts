@@ -106,7 +106,7 @@ export interface DashboardProps {
    * Called after a widget is successfully added via the modal.
    * The Dashboard manages internal items state; use this for side effects only.
    */
-  onAddWidget?: () => void;
+  onAddWidget?: (widget: WidgetItem) => void;
   onSearch?: (query: string) => void;
   theme?: DashboardTheme;
   className?: string;

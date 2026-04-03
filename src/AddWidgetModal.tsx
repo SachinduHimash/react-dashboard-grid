@@ -298,8 +298,6 @@ const Icons = {
   ),
 };
 
-// ─── Types ────────────────────────────────────────────────────────────────────
-
 /**
  * A widget template that a programmer registers. The `component` field
  * accepts a fully-configured WidgetItem (minus the `id`) that will be

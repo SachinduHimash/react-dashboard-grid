@@ -1,6 +1,5 @@
 # react-dashboard-grid
 
-![CI](https://github.com/SachinduHimash/react-dashboard-grid/actions/workflows/publish.yml/badge.svg)
 ![npm](https://img.shields.io/npm/v/react-dashboard-grid)
 ![downloads](https://img.shields.io/npm/dm/react-dashboard-grid)
 ![npm bundle size](https://img.shields.io/bundlephobia/minzip/react-dashboard-grid)

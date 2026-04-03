@@ -278,7 +278,7 @@ const allWidgetsItems: WidgetItem[] = [
       title: "NPS Score",
       subtitle: "User satisfaction",
       value: "72",
-      percentage: 72,
+      percentage: 16,
       changeText: "↑4 pts this quarter",
       color: "#6366f1",
     },
@@ -454,7 +454,7 @@ export const AllWidgets: Story = {
   args: {
     title: "react-dashboard-grid",
     subtitle:
-      "Every widget type in one view — drag, resize, add more via the modal",
+      "Every widget type in one view - drag, resize, add more via the modal",
     items: allWidgetsItems,
     showAddWidget: true,
     showEditLayout: true,
@@ -541,7 +541,7 @@ const darkItems: WidgetItem[] = [
     data: {
       chartType: "area",
       title: "ARR Growth",
-      subtitle: "2024 — trailing 8 months",
+      subtitle: "2024 - trailing 8 months",
       showGrid: true,
       showLegend: true,
       seriesLabels: { value: "New ARR", value2: "Expansion" },
@@ -685,7 +685,7 @@ const darkItems: WidgetItem[] = [
 ];
 
 export const DarkSlate: Story = {
-  name: "2 · Dark Navy — Executive Analytics",
+  name: "2 · Dark Navy - Executive Analytics",
   args: {
     title: "Revenue Intelligence",
     subtitle: "Board-level view · FY 2024",
@@ -927,7 +927,7 @@ const opsItems: WidgetItem[] = [
 ];
 
 export const Emerald: Story = {
-  name: "3 · Emerald — Operations Dashboard",
+  name: "3 · Emerald - Operations Dashboard",
   args: {
     title: "Platform Operations",
     subtitle: "Infrastructure health · Real-time",
@@ -1143,7 +1143,7 @@ const mktItems: WidgetItem[] = [
 ];
 
 export const Amber: Story = {
-  name: "4 · Amber Warm — Marketing Dashboard",
+  name: "4 · Amber Warm - Marketing Dashboard",
   args: {
     title: "Marketing Performance",
     subtitle: "Campaigns, traffic & conversions · Q3 2024",
@@ -1217,7 +1217,7 @@ const hrItems: WidgetItem[] = [
   {
     id: "hr5",
     type: "profile",
-    size: "small",
+    size: "medium",
     layout: { x: 0, y: 2 },
     data: {
       name: "James Okafor",
@@ -1233,8 +1233,8 @@ const hrItems: WidgetItem[] = [
   {
     id: "hr6",
     type: "profile",
-    size: "small",
-    layout: { x: 3, y: 2 },
+    size: "medium",
+    layout: { x: 6, y: 0 },
     data: {
       name: "Priya Sharma",
       email: "priya@hr.example.com",
@@ -1367,7 +1367,7 @@ const hrItems: WidgetItem[] = [
 ];
 
 export const Rose: Story = {
-  name: "5 · Rose — HR & People Analytics",
+  name: "5 · Rose - HR & People Analytics",
   args: {
     title: "People Dashboard",
     subtitle: "Talent, hiring & organisation health · Q3 2024",
@@ -1477,7 +1477,7 @@ const resizableItems: WidgetItem[] = [
 ];
 
 export const ResizableWidgets: Story = {
-  name: "6 · Resizable Widgets — Edit Mode",
+  name: "6 · Resizable Widgets - Edit Mode",
   args: {
     title: "Resizable Dashboard",
     subtitle:
@@ -1499,7 +1499,7 @@ export const ResizableWidgets: Story = {
 // ═══════════════════════════════════════════════════════════════════════════════
 
 export const Minimal: Story = {
-  name: "7 · Minimal — No Header Chrome",
+  name: "7 · Minimal - No Header Chrome",
   args: {
     showAddWidget: false,
     showEditLayout: false,

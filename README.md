@@ -1,16 +1,12 @@
 # react-dashboard-grid
 
-A flexible, themeable React dashboard library with drag-and-drop layout, a rich widget library, and a fully functional **Add Widget** modal.
-
----
+`react-dashboard-grid` is a React component library for building interactive, data-rich dashboards. It ships with a complete set of built-in widgets - stat cards, charts, tables, gauges, calendars, and more - alongside a drag-and-drop layout engine, a live theming system, and a modal for adding widgets at runtime. Every widget is sized and positioned on a 12-column grid, so dashboards compose predictably whether you're building an analytics product, an ops tool, or an internal admin panel. The library is written in TypeScript and exports full type definitions.
 
 ## Installation
 
 ```bash
-npm install react-dashboard-grid react-grid-layout recharts
+npm install react-dashboard-grid
 ```
-
----
 
 ## Quick Start
 
@@ -58,24 +54,22 @@ export default function App() {
 }
 ```
 
----
-
 ## `<Dashboard>` Props
 
 | Prop                 | Type                                     | Default               | Description                                                                                                                    |
 | -------------------- | ---------------------------------------- | --------------------- | ------------------------------------------------------------------------------------------------------------------------------ |
 | `items`              | `WidgetItem[]`                           | **required**          | Initial widget list. Dashboard manages its own state internally — new widgets are appended without requiring parent re-render. |
-| `title`              | `string`                                 | —                     | Header title                                                                                                                   |
-| `subtitle`           | `string`                                 | —                     | Header subtitle                                                                                                                |
+| `title`              | `string`                                 |                       | Header title                                                                                                                   |
+| `subtitle`           | `string`                                 |                       | Header subtitle                                                                                                                |
 | `showAddWidget`      | `boolean`                                | `true`                | Show "+ Add Widget" button                                                                                                     |
 | `showEditLayout`     | `boolean`                                | `true`                | Show "Edit Layout" toggle                                                                                                      |
 | `showSearch`         | `boolean`                                | `true`                | Show search input                                                                                                              |
-| `headerActions`      | `DashboardAction[]`                      | —                     | Extra buttons rendered in the header                                                                                           |
-| `onLayoutChange`     | `(layout: WidgetLayoutChange[]) => void` | —                     | Fires after drag/resize; receives clean backend-ready payload                                                                  |
-| `onAddWidget`        | `() => void`                             | —                     | Side-effect callback — fires after a widget is added. Dashboard handles state internally.                                      |
-| `onSearch`           | `(query: string) => void`                | —                     | Fires on search input change                                                                                                   |
+| `headerActions`      | `DashboardAction[]`                      |                       | Extra buttons rendered in the header                                                                                           |
+| `onLayoutChange`     | `(layout: WidgetLayoutChange[]) => void` |                       | Fires after drag/resize; receives clean backend-ready payload                                                                  |
+| `onAddWidget`        | `() => void`                             |                       | Side-effect callback — fires after a widget is added. Dashboard handles state internally.                                      |
+| `onSearch`           | `(query: string) => void`                |                       | Fires on search input change                                                                                                   |
 | `theme`              | `DashboardTheme`                         | see defaults          | Theme object (see Theming section)                                                                                             |
-| `className`          | `string`                                 | —                     | Root element class                                                                                                             |
+| `className`          | `string`                                 |                       | Root element class                                                                                                             |
 | `widgetTemplates`    | `WidgetTemplate[]`                       | DEFAULT_TEMPLATES     | Templates for the Add Widget modal                                                                                             |
 | `searchLabel`        | `string`                                 | `"Search widgets..."` | Placeholder for search input                                                                                                   |
 | `editLabel`          | `string`                                 | `"Edit Layout"`       | Edit button label                                                                                                              |
@@ -83,17 +77,44 @@ export default function App() {
 | `addLabel`           | `string`                                 | `"+ Add Widget"`      | Add widget button label                                                                                                        |
 | `disableEditingGrid` | `boolean`                                | `false`               | Suppress grid overlay while editing                                                                                            |
 
----
+## Widget Layout and Positioning
+
+Every `WidgetItem` accepts an optional `layout` property that controls where it appears on the grid. The dashboard uses a **12-column grid**, and each widget occupies a number of columns determined by its `size` (or `customSize`). The `layout` object lets you pin a widget to a specific column (`x`) and row (`y`).
+
+```ts
+interface WidgetLayout {
+  x: number; // Column index (0–11). 0 = left edge.
+  y: number; // Row index. 0 = top. Rows are unitless — each unit corresponds to one row-height slot.
+}
+```
+
+`x` is the **starting column**, zero-indexed from the left edge. A `small` widget is 3 columns wide, so setting `x: 9` places it flush against the right edge of a 12-column grid. A `large` widget is 12 columns wide, so it always starts at `x: 0`.
+
+`y` is the **starting row**. Row heights are determined by the widget's `size`: a `small` widget is 2 row units tall, `medium` is 3, and `large` is 4. To place two rows of small widgets without overlap, the second row should start at `y: 2`.
+
+Here is a worked example from the Storybook showcasing a typical 4-up stat row followed by a chart row:
+
+```tsx
+const items: WidgetItem[] = [
+  // Four stat cards across the top — each 3 columns wide, starting at y: 0
+  { id: "s1", type: "stat", size: "small", layout: { x: 0, y: 0 }, data: { ... } },
+  { id: "s2", type: "stat", size: "small", layout: { x: 3, y: 0 }, data: { ... } },
+  { id: "s3", type: "stat", size: "small", layout: { x: 6, y: 0 }, data: { ... } },
+  { id: "s4", type: "stat", size: "small", layout: { x: 9, y: 0 }, data: { ... } },
+
+  // Two medium charts on the next row — small widgets are 2 rows tall, so y: 2
+  { id: "c1", type: "chart", size: "medium", layout: { x: 0, y: 2 }, data: { ... } },
+  { id: "c2", type: "chart", size: "medium", layout: { x: 6, y: 2 }, data: { ... } },
+];
+```
+
+**If you omit `layout`**, the grid engine places widgets automatically in left-to-right, top-to-bottom order. This is fine for simple dashboards, but you should provide explicit `layout` values whenever you want consistent positioning — especially if widgets will be added or removed dynamically.
+
+After a user drags or resizes widgets, the updated positions are reported via `onLayoutChange`, so you can persist them and restore the same positions on next load.
 
 ## Add Widget Modal
 
-The `AddWidgetModal` is now driven by **programmer-supplied templates**. Each template includes the complete, pre-configured `WidgetItem` data (minus `id`) that will be cloned onto the dashboard.
-
-### How it works
-
-1. You (the programmer) define a list of `WidgetTemplate` objects.
-2. Users open the modal, browse, select a widget, and click **Add to Dashboard**.
-3. The dashboard automatically appends the widget and assigns it a unique `id`.
+The `AddWidgetModal` is driven by programmer-supplied templates. Each template includes the complete, pre-configured `WidgetItem` data (minus `id`) that will be cloned onto the dashboard when the user clicks "Add to Dashboard".
 
 ### `WidgetTemplate` interface
 
@@ -106,7 +127,7 @@ interface WidgetTemplate {
 }
 ```
 
-### Example — custom templates
+### Custom templates
 
 ```tsx
 import { Dashboard } from "react-dashboard-grid";
@@ -189,7 +210,6 @@ If you do not pass `widgetTemplates`, the modal uses `DEFAULT_TEMPLATES` which c
 ```tsx
 import { DEFAULT_TEMPLATES } from "react-dashboard-grid";
 
-// Extend defaults with your own
 const templates = [
   ...DEFAULT_TEMPLATES,
   {
@@ -229,11 +249,9 @@ function MyPage() {
 }
 ```
 
----
-
 ## Widget Reference
 
-### `stat` — Stat Card
+### `stat` - Stat Card
 
 Displays a single KPI metric with an optional trend arrow and icon.
 
@@ -262,9 +280,7 @@ Displays a single KPI metric with an optional trend arrow and icon.
 | `changeType` | `"up" \| "down" \| "neutral"` | Controls arrow and color  |
 | `icon`       | `ReactNode`                   | Optional icon (top-right) |
 
----
-
-### `chart` — Chart Card
+### `chart` - Chart Card
 
 Supports 5 chart types via a single unified `chartType` discriminator.
 
@@ -379,9 +395,7 @@ Supports 5 chart types via a single unified `chartType` discriminator.
 | `showLegend`   | `boolean`          | Show legend (default: false)                  |
 | `seriesLabels` | `object`           | Labels for multi-series legend                |
 
----
-
-### `list` — List Card
+### `list` - List Card
 
 Scrollable list of labelled rows with optional values, badges, and icons.
 
@@ -412,9 +426,7 @@ Scrollable list of labelled rows with optional values, badges, and icons.
 | `badgeColor` | `string`    | Badge background color    |
 | `icon`       | `ReactNode` | Optional leading icon     |
 
----
-
-### `table` — Data Table
+### `table` - Data Table
 
 Sortable, paginated table for dense data.
 
@@ -465,9 +477,7 @@ Sortable, paginated table for dense data.
 | `align`  | `"left" \| "center" \| "right"` | Cell alignment       |
 | `render` | `(value, row) => ReactNode`     | Custom cell renderer |
 
----
-
-### `gauge` — Gauge Card
+### `gauge` - Gauge Card
 
 Semicircle gauge with a percentage fill and needle.
 
@@ -488,9 +498,7 @@ Semicircle gauge with a percentage fill and needle.
 }
 ```
 
----
-
-### `profile` — Profile Card
+### `profile` - Profile Card
 
 User card with avatar, name, role badge, and optional stat row.
 
@@ -515,9 +523,7 @@ User card with avatar, name, role badge, and optional stat row.
 }
 ```
 
----
-
-### `splitstat` — Split Progress Card
+### `splitstat` - Split Progress Card
 
 Main value with a labelled multi-segment stacked progress bar.
 
@@ -542,9 +548,7 @@ Main value with a labelled multi-segment stacked progress bar.
 }
 ```
 
----
-
-### `calendar` — Calendar Card
+### `calendar` - Calendar Card
 
 Monthly calendar with event dot indicators.
 
@@ -567,9 +571,7 @@ Monthly calendar with event dot indicators.
 }
 ```
 
----
-
-### `text` — Text Block Card
+### `text` - Text Block Card
 
 Free-form text or notes widget.
 
@@ -585,11 +587,9 @@ Free-form text or notes widget.
 }
 ```
 
----
+### `custom` - Custom Card
 
-### `custom` — Custom Card
-
-Render any React component inside a dashboard card.
+Renders any React component inside a standard dashboard card shell. The card handles all sizing, border, and scroll behaviour — your component just needs to render its own content and can assume it has full width and height available.
 
 ```tsx
 import { MyCustomWidget } from "./MyCustomWidget";
@@ -606,7 +606,25 @@ import { MyCustomWidget } from "./MyCustomWidget";
 }
 ```
 
----
+The underlying `CustomCard` wraps your component like this:
+
+```tsx
+interface Props {
+  component: React.ComponentType<any>;
+  props?: Record<string, unknown>;
+}
+
+export const CustomCard: React.FC<Props> = ({
+  component: Component,
+  props,
+}) => (
+  <div style={{ width: "100%", height: "100%", overflow: "auto" }}>
+    <Component {...(props ?? {})} />
+  </div>
+);
+```
+
+Your component receives `props` spread directly as React props. The outer `div` is `width: 100%, height: 100%` with `overflow: auto`, so scrollable content works without any extra wrapper in your component. Any React component with no required props (or with all required props covered by the `props` field) can be dropped in. This is useful for embedding third-party charts, maps, custom forms, or any one-off widget that doesn't fit the standard types.
 
 ## Theming
 
@@ -669,8 +687,6 @@ const tealTheme = {
 };
 ```
 
----
-
 ## Widget Sizing
 
 Three predefined sizes:
@@ -692,21 +708,14 @@ Custom sizes are also supported:
 }
 ```
 
----
-
 ## Drag, Resize & Edit Mode
 
-- Click **Edit Layout** to enter edit mode.
-- In edit mode, all widgets show a drag handle and glow ring.
-- Widgets with `resizable: true` show a resize handle.
-- Resizing snaps to the nearest predefined size by default; use `customSize` for free sizing.
-- `onLayoutChange` fires with the updated layout after drag or resize stops.
+Click **Edit Layout** to enter edit mode. In edit mode, all widgets show a drag handle and glow ring. Widgets with `resizable: true` show a resize handle. Resizing snaps to the nearest predefined size by default; use `customSize` for free sizing. `onLayoutChange` fires with the updated layout after drag or resize stops.
 
 ```tsx
 <Dashboard
   items={items}
   onLayoutChange={(layout) => {
-    // Persist layout to your backend
     saveLayout(layout);
   }}
 />
@@ -724,8 +733,6 @@ interface WidgetLayoutChange {
   resizable: boolean;
 }
 ```
-
----
 
 ## Full Example
 
@@ -797,8 +804,6 @@ const myTemplates: WidgetTemplate[] = [
 ];
 
 export default function App() {
-  const [saved, setSaved] = useState(false);
-
   return (
     <Dashboard
       title="Analytics Dashboard"
@@ -811,17 +816,12 @@ export default function App() {
         cardBackground: "#ffffff",
         borderRadius: "12px",
       }}
-      onLayoutChange={(layout) => {
-        console.log("Layout changed:", layout);
-        setSaved(false);
-      }}
+      onLayoutChange={(layout) => console.log("Layout changed:", layout)}
       onAddWidget={() => console.log("Widget added")}
     />
   );
 }
 ```
-
----
 
 ## TypeScript Exports
 
@@ -862,8 +862,6 @@ import {
 } from "react-dashboard-grid";
 ```
 
----
-
 ## FAQ
 
 **Q: How do I pre-populate the modal with my product's specific widgets?**
@@ -881,3 +879,7 @@ Yes. Set `resizable: true` and `customSize: { w, h }` on the widget. This bypass
 **Q: How do I persist the layout?**
 
 Use `onLayoutChange` — it fires after every drag or resize stop with a clean `WidgetLayoutChange[]` payload. Save this to your backend and pass it back via `items[n].layout`.
+
+**Q: Can I render completely custom content in a widget?**
+
+Yes. Use `type: "custom"` and pass any React component via the `component` field. The component receives your `props` object spread as React props and is wrapped in a full-bleed, scrollable container.

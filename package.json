@@ -49,9 +49,7 @@
   },
   "peerDependencies": {
     "react": ">=17",
-    "react-dom": ">=17",
-    "react-grid-layout": ">=1.0.0 <2.0.0",
-    "recharts": "^3.8.1"
+    "react-dom": ">=17"
   },
   "dependencies": {
     "react-grid-layout": ">=1.0.0 <2.0.0",

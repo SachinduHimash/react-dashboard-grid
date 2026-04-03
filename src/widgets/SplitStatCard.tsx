@@ -40,7 +40,14 @@ export const SplitStatCard: React.FC<{ data: SplitStatData }> = ({ data }) => {
           marginBottom: 12,
         }}
       >
-        <div style={{ fontSize: 14, fontWeight: 600, color: text }}>
+        <div
+          style={{
+            fontSize: 15,
+            fontWeight: 600,
+            color: text,
+            textTransform: "uppercase",
+          }}
+        >
           {data.title}
         </div>
         {data.titleAction && (

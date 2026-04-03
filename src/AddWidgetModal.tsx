@@ -569,11 +569,16 @@ export const DEFAULT_TEMPLATES: WidgetTemplate[] = [
     description: "User avatar, name, email, role badge and optional stat row.",
     component: {
       type: "profile",
-      size: "small",
+      size: "medium",
       data: {
         name: "New User",
         role: "Member",
+        email: "newUser@user.com",
         avatarEmoji: "👤",
+        stats: [
+          { label: "Posts", value: 12 },
+          { label: "Followers", value: 120 },
+        ],
       },
     },
   },

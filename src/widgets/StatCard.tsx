@@ -20,7 +20,7 @@ export const StatCard: React.FC<{ data: StatData }> = ({ data }) => (
     >
       <span
         style={{
-          fontSize: 13,
+          fontSize: 15,
           color: "var(--rdg-text)",
           fontWeight: 500,
           textTransform: "uppercase",

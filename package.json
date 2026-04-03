@@ -1,10 +1,17 @@
 {
   "name": "react-dashboard-grid",
   "version": "1.0.0",
-  "description": "",
+  "description": "A flexible, themeable React dashboard library with drag-and-drop layout, a rich widget library, and a fully functional Add Widget modal. Built on top of react-grid-layout, it provides a powerful and customizable solution for building complex dashboards with ease.",
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
   "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "private": false,
   "scripts": {
     "test": "jest",
     "build": "tsc",
@@ -13,9 +20,19 @@
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "keywords": [
+    "react",
+    "dashboard",
+    "grid",
+    "layout",
+    "library",
+    "widgets",
+    "responsive",
+    "drag-and-drop",
+    "resizable"
+  ],
+  "author": "Himash Peiris",
+  "license": "MIT",
   "devDependencies": {
     "@babel/core": "^7.29.0",
     "@babel/preset-env": "^7.29.2",

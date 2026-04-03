@@ -10,6 +10,50 @@
 
 Check out the interactive components on [Storybook](https://sachinduhimash.github.io/react-dashboard-grid/).
 
+---
+
+## Table of Contents
+
+- [Installation](#installation)
+- [Quick Start](#quick-start)
+- [Dashboard Props](#dashboard-props)
+- [Widget Layout and Positioning](#widget-layout-and-positioning)
+- [Add Widget Modal](#add-widget-modal)
+  - [WidgetTemplate interface](#widgettemplate-interface)
+  - [Custom templates](#custom-templates)
+  - [Using DEFAULT_TEMPLATES](#using-default_templates)
+  - [Standalone modal usage](#standalone-modal-usage)
+- [Widget Reference](#widget-reference)
+  - [stat — Stat Card](#stat---stat-card)
+  - [chart — Chart Card](#chart---chart-card)
+  - [list — List Card](#list---list-card)
+  - [table — Data Table](#table---data-table)
+  - [gauge — Gauge Card](#gauge---gauge-card)
+  - [profile — Profile Card](#profile---profile-card)
+  - [splitstat — Split Progress Card](#splitstat---split-progress-card)
+  - [calendar — Calendar Card](#calendar---calendar-card)
+  - [text — Text Block Card](#text---text-block-card)
+  - [custom — Custom Card](#custom---custom-card)
+- [Theming](#theming)
+  - [Theme reference](#theme-reference)
+  - [Dark theme](#dark-theme)
+  - [Teal/mint theme](#tealmint-theme)
+  - [Midnight blue theme](#midnight-blue-theme)
+  - [Warm sand theme](#warm-sand-theme)
+  - [Forest green theme](#forest-green-theme)
+  - [Rose quartz theme](#rose-quartz-theme)
+  - [Slate enterprise theme](#slate-enterprise-theme)
+  - [Sunset orange theme](#sunset-orange-theme)
+  - [Arctic white theme](#arctic-white-theme)
+  - [Charcoal ink theme](#charcoal-ink-theme)
+- [Widget Sizing](#widget-sizing)
+- [Drag, Resize & Edit Mode](#drag-resize--edit-mode)
+- [Full Example](#full-example)
+- [TypeScript Exports](#typescript-exports)
+- [FAQ](#faq)
+
+---
+
 ## Installation
 
 ```bash
@@ -654,6 +698,8 @@ Pass a `theme` object to `<Dashboard>` to customise the visual style:
 />
 ```
 
+### Theme reference
+
 **DashboardTheme props:**
 
 | Prop              | Default                 | Description                                  |
@@ -667,7 +713,7 @@ Pass a `theme` object to `<Dashboard>` to customise the visual style:
 | `borderColor`     | `#e5e7eb`               | Card and divider borders                     |
 | `fontFamily`      | `system-ui, sans-serif` | Font stack                                   |
 
-### Dark theme example
+### Dark theme
 
 ```tsx
 const darkTheme = {
@@ -681,7 +727,7 @@ const darkTheme = {
 };
 ```
 
-### Teal/mint theme example
+### Teal/mint theme
 
 ```tsx
 const tealTheme = {
@@ -692,6 +738,142 @@ const tealTheme = {
   textColor: "#134e4a",
   mutedColor: "#5eead4",
   borderColor: "#99f6e4",
+};
+```
+
+### Midnight blue theme
+
+Deep navy background with electric blue accents — ideal for ops dashboards and monitoring tools.
+
+```tsx
+const midnightBlueTheme = {
+  primaryColor: "#3b82f6",
+  backgroundColor: "#0a0f1e",
+  cardBackground: "#111827",
+  borderRadius: "10px",
+  textColor: "#e2e8f0",
+  mutedColor: "#64748b",
+  borderColor: "#1e3a5f",
+  fontFamily: "'Inter', sans-serif",
+};
+```
+
+### Warm sand theme
+
+Earthy, neutral tones with amber accents — great for productivity and note-taking apps.
+
+```tsx
+const warmSandTheme = {
+  primaryColor: "#d97706",
+  backgroundColor: "#fdf6ec",
+  cardBackground: "#fffbf5",
+  borderRadius: "10px",
+  textColor: "#1c1917",
+  mutedColor: "#a8a29e",
+  borderColor: "#e7d9c8",
+  fontFamily: "'Georgia', serif",
+};
+```
+
+### Forest green theme
+
+Nature-inspired greens with rich, organic feel — suits health, sustainability, or finance dashboards.
+
+```tsx
+const forestGreenTheme = {
+  primaryColor: "#16a34a",
+  backgroundColor: "#f0fdf4",
+  cardBackground: "#ffffff",
+  borderRadius: "12px",
+  textColor: "#14532d",
+  mutedColor: "#6b7280",
+  borderColor: "#bbf7d0",
+  fontFamily: "'DM Sans', sans-serif",
+};
+```
+
+### Rose quartz theme
+
+Soft pinks and warm whites — great for lifestyle, wellness, or consumer-facing dashboards.
+
+```tsx
+const roseQuartzTheme = {
+  primaryColor: "#e11d48",
+  backgroundColor: "#fff1f2",
+  cardBackground: "#ffffff",
+  borderRadius: "16px",
+  textColor: "#881337",
+  mutedColor: "#fb7185",
+  borderColor: "#fecdd3",
+  fontFamily: "'Lato', sans-serif",
+};
+```
+
+### Slate enterprise theme
+
+High-contrast, professional slate palette — designed for enterprise admin panels and B2B tools.
+
+```tsx
+const slateEnterpriseTheme = {
+  primaryColor: "#0284c7",
+  backgroundColor: "#f1f5f9",
+  cardBackground: "#ffffff",
+  borderRadius: "6px",
+  textColor: "#0f172a",
+  mutedColor: "#64748b",
+  borderColor: "#cbd5e1",
+  fontFamily: "'system-ui', sans-serif",
+};
+```
+
+### Sunset orange theme
+
+Warm, energetic gradient palette — eye-catching for marketing dashboards and campaign trackers.
+
+```tsx
+const sunsetOrangeTheme = {
+  primaryColor: "#ea580c",
+  backgroundColor: "#fff7ed",
+  cardBackground: "#ffffff",
+  borderRadius: "12px",
+  textColor: "#431407",
+  mutedColor: "#9a3412",
+  borderColor: "#fed7aa",
+  fontFamily: "'Nunito', sans-serif",
+};
+```
+
+### Arctic white theme
+
+Ultra-clean, minimal whites with cool blue accents — perfect for medical, scientific, or data-heavy UIs.
+
+```tsx
+const arcticWhiteTheme = {
+  primaryColor: "#0ea5e9",
+  backgroundColor: "#f8fafc",
+  cardBackground: "#ffffff",
+  borderRadius: "8px",
+  textColor: "#0c4a6e",
+  mutedColor: "#94a3b8",
+  borderColor: "#e0f2fe",
+  fontFamily: "'IBM Plex Sans', sans-serif",
+};
+```
+
+### Charcoal ink theme
+
+Dark charcoal with stark white text and vivid cyan accents — ideal for developer tools and terminal-style dashboards.
+
+```tsx
+const charcoalInkTheme = {
+  primaryColor: "#06b6d4",
+  backgroundColor: "#18181b",
+  cardBackground: "#27272a",
+  borderRadius: "4px",
+  textColor: "#fafafa",
+  mutedColor: "#71717a",
+  borderColor: "#3f3f46",
+  fontFamily: "'JetBrains Mono', monospace",
 };
 ```
 

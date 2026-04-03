@@ -108,7 +108,15 @@ export const Dashboard: React.FC<DashboardProps> = ({
       setLayout(newLayout);
 
       // Notify parent if they want to know
-      onAddWidget?.(widget);
+      onAddWidget?.({
+        ...widget,
+        layout: {
+          x: newLayoutItem.x,
+          y: newLayoutItem.y,
+          w: newLayoutItem.w,
+          h: newLayoutItem.h,
+        },
+      });
     },
     [items, layout, onAddWidget],
   );

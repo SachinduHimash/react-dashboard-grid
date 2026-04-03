@@ -1,6 +1,15 @@
 # react-dashboard-grid
 
+![CI](https://github.com/SachinduHimash/react-dashboard-grid/actions/workflows/publish.yml/badge.svg)
+![npm](https://img.shields.io/npm/v/react-dashboard-grid)
+![downloads](https://img.shields.io/npm/dm/react-dashboard-grid)
+![npm bundle size](https://img.shields.io/bundlephobia/minzip/react-dashboard-grid)
+
 `react-dashboard-grid` is a React component library for building interactive, data-rich dashboards. It ships with a complete set of built-in widgets - stat cards, charts, tables, gauges, calendars, and more - alongside a drag-and-drop layout engine, a live theming system, and a modal for adding widgets at runtime. Every widget is sized and positioned on a 12-column grid, so dashboards compose predictably whether you're building an analytics product, an ops tool, or an internal admin panel. The library is written in TypeScript and exports full type definitions.
+
+# Demo
+
+Check out the interactive components on [Storybook](https://sachinduhimash.github.io/react-dashboard-grid/).
 
 ## Installation
 

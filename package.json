@@ -1,6 +1,6 @@
 {
   "name": "react-dashboard-grid",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A flexible, themeable React dashboard library with drag-and-drop layout, a rich widget library, and a fully functional Add Widget modal. Built on top of react-grid-layout, it provides a powerful and customizable solution for building complex dashboards with ease.",
   "repository": {
     "type": "git",

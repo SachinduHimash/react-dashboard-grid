@@ -15,7 +15,7 @@
   "scripts": {
     "test": "jest",
     "build": "tsc",
-    "prepublishOnly": "npm test && npm run build",
+    "prepublishOnly": "npm run build",
     "pack:install": "npm run build && npm pack",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build"

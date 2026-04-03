@@ -1,2 +1,6 @@
 node_modules
 /dist
+/.parccel-cache
+/.parcelrc
+/.storybook
+/.vscode

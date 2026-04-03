@@ -1,0 +1,24 @@
+[23:45:14.955] [INFO] storybook v10.3.4
+[23:45:15.398] [DEBUG] Getting package.json info for /Users/himash/Projects/react-dashboard-grid/package.json...
+[23:45:17.190] [INFO] Starting...
+[23:45:17.547] [DEBUG] Starting preview..
+[23:45:17.584] [INFO] Addon-docs: using MDX3
+[23:45:17.648] [INFO] Using implicit CSS loaders
+[23:45:17.665] [INFO] Using default Webpack5 setup
+[23:45:18.651] [DEBUG] Using tsconfig paths for react-docgen
+[23:45:20.989] [ERROR] Failed to build the preview
+[23:45:21.002] [WARN] Force closed preview build
+[23:45:21.009] [ERROR] [38;2;241;97;97mSB_BUILDER-WEBPACK5_0003 (WebpackCompilationError): There were problems when compiling your code with Webpack.
+Run Storybook with --debug-webpack for more information.[39m
+    at starter (file://./node_modules/@storybook/builder-webpack5/dist/index.js:799:11)
+    at starter.next (<anonymous>)
+    at Module.start (file://./node_modules/@storybook/builder-webpack5/dist/index.js:857:34)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async storybookDevServer (file://./node_modules/storybook/dist/core-server/index.js:7503:83)
+    at async buildOrThrow (file://./node_modules/storybook/dist/core-server/index.js:4508:12)
+    at async buildDevStandalone (file://./node_modules/storybook/dist/core-server/index.js:8033:41)
+    at async withTelemetry (file://./node_modules/storybook/dist/_node-chunks/chunk-HUYNFPPD.js:225:12)
+    at async dev (file://./node_modules/storybook/dist/bin/core.js:2736:3)
+    at async _Command.<anonymous> (file://./node_modules/storybook/dist/bin/core.js:2806:92)
+[23:45:21.017] [WARN] Broken build, fix the error above.
+You may need to refresh the browser.
